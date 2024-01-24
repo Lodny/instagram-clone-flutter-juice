@@ -29,7 +29,7 @@ class UploadPage extends GetView<UploadController> {
         ),
         actions: [
           GestureDetector(
-            onTap: () {},
+            onTap: controller.gotoImageFilter,
             child: Padding(
               padding: const EdgeInsets.all(15.0),
               child: Image.asset(IconsPath.nextImage),

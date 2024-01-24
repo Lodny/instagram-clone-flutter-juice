@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:photo_manager/photo_manager.dart';
@@ -6,6 +8,8 @@ import 'package:photofilters/filters/preset_filters.dart';
 import 'package:path/path.dart';
 import 'package:image/image.dart' as imageLib;
 import 'package:photofilters/widgets/photo_filter.dart';
+
+import '../page/upload_description_page.dart';
 
 
 class UploadController extends GetxController {
@@ -18,6 +22,8 @@ class UploadController extends GetxController {
       width: 0,
       height: 0,
   ).obs;
+
+  File? filteredFile;
 
   @override
   void onInit() {
@@ -91,8 +97,8 @@ class UploadController extends GetxController {
     );
 
     if (imageFile != null && imageFile.containsKey('image_filtered')) {
-      final filteredFile = imageFile['image_filtered'];
-      // Get.to(() => UploadDescription());
+      filteredFile = imageFile['image_filtered'];
+      Get.to(() => UploadDescriptionPage());
     }
   }
 }

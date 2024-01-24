@@ -3,8 +3,8 @@ import 'package:photo_manager/photo_manager.dart';
 
 class UploadController extends GetxController {
   var albums = <AssetPathEntity>[];
-  var imageList = <AssetEntity>[];
-  var headerTitle = '';
+  RxList<AssetEntity> imageList = <AssetEntity>[].obs;
+  RxString headerTitle = ''.obs;
   Rx<AssetEntity> selectedImage = AssetEntity(
       id: '',
       typeInt: 0,
@@ -42,21 +42,23 @@ class UploadController extends GetxController {
     }
   }
 
-  void _loadData() async {
-    headerTitle = albums.first.name;
-
-    await _pagingPhotos();
-
-    update();
+  void _loadData() {
+    changeAlbum(albums.first);
   }
 
-  Future<void> _pagingPhotos() async {
-    var photos = await albums.first.getAssetListPaged(page: 0, size: 30);
+  Future<void> _pagingPhotos(AssetPathEntity album) async {
+    imageList.clear();
+    var photos = await album.getAssetListPaged(page: 0, size: 30);
     imageList.addAll(photos);
     changeSelectedImage(imageList.first);
   }
 
   void changeSelectedImage(AssetEntity ae) {
     selectedImage(ae);
+  }
+
+  void changeAlbum(AssetPathEntity album) async {
+    headerTitle(album.name);
+    await _pagingPhotos(album);
   }
 }

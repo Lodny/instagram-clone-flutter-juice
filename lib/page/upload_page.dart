@@ -55,7 +55,10 @@ class UploadPage extends GetView<UploadController> {
       width: width,
       height: width,
       color: Colors.grey,
-      child: Obx(() => _photoWidget(controller.selectedImage.value, width.toInt())),
+      child: Obx(() => controller.selectedImage.value.id != ''
+          ? _photoWidget(controller.selectedImage.value, width.toInt())
+          : Container()
+      ),
     );
   }
 
@@ -90,12 +93,30 @@ class UploadPage extends GetView<UploadController> {
                       SingleChildScrollView(
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.stretch,
-                          children: controller.albums.map((album) =>
-                              Container(
+                          children: List.generate(
+                            controller.albums.length,
+                            (index) => GestureDetector(
+                              child: Container(
                                 padding: EdgeInsets.symmetric(vertical: 15, horizontal: 15),
-                                child: Text(album.name),
-                              )
-                          ).toList(),
+                                child: Text(controller.albums[index].name),
+                              ),
+                              onTap: () {
+                                controller.changeAlbum(controller.albums[index]);
+                                Get.back();
+                              },
+                            ),
+                          ),
+                          // children: controller.albums.map((album) =>
+                          //     GestureDetector(
+                          //       child: Container(
+                          //         padding: EdgeInsets.symmetric(vertical: 15, horizontal: 15),
+                          //         child: Text(album.name),
+                          //       ),
+                          //       onTap: () {
+                          //         controller.changeSelectedAlbum(album.name);
+                          //       },
+                          //     )
+                          // ).toList(),
                         ),
                       )
                     ],
@@ -104,10 +125,10 @@ class UploadPage extends GetView<UploadController> {
               ),
               child: Row(
                 children: [
-                  Text(
-                    controller.headerTitle,
+                  Obx(() => Text(
+                    controller.headerTitle.value ?? '',
                     style: TextStyle(color: Colors.black, fontSize: 18),
-                  ),
+                  )),
                   Icon(Icons.arrow_drop_down),
                 ],
               ),
@@ -149,7 +170,7 @@ class UploadPage extends GetView<UploadController> {
   }
 
   Widget _imageSelectList() {
-    return GridView.builder(
+    return Obx(() => GridView.builder(
       physics: NeverScrollableScrollPhysics(),
       shrinkWrap: true,
       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
@@ -162,7 +183,7 @@ class UploadPage extends GetView<UploadController> {
       itemBuilder: (BuildContext context, int index) {
         return _photoWidget(controller.imageList[index], 200);
       },
-    );
+    ));
   }
 
   Widget _photoWidget(AssetEntity ae, int size) {

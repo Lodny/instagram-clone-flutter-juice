@@ -57,6 +57,13 @@ class UploadDescriptionPage extends GetView<UploadController> {
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
                       _description(),
+                      Divider(color: Color(0xffe9e9e9),),
+                      _infoOne('사람 태그하기'),
+                      Divider(color: Color(0xffe9e9e9),),
+                      _infoOne('위치 추가'),
+                      Divider(color: Color(0xffe9e9e9),),
+                      _infoOne('다른 미디어에도 게시'),
+                      _snsInfo(),
                     ],
                   ),
                 ),
@@ -84,8 +91,87 @@ class UploadDescriptionPage extends GetView<UploadController> {
           Expanded(
             child: TextField(
               maxLines: null,
+              decoration: InputDecoration(
+                border: InputBorder.none,
+                focusedBorder: InputBorder.none,
+                enabledBorder: InputBorder.none,
+                errorBorder: InputBorder.none,
+                disabledBorder: InputBorder.none,
+                contentPadding: EdgeInsets.only(left: 15),
+                hintText: '문구 입력...'
+              ),
             ),
           )
+        ],
+      ),
+    );
+  }
+
+  Widget _infoOne(String title) {
+    return Padding(
+      padding: EdgeInsets.symmetric(
+        vertical: 7,
+        horizontal: 15,
+      ),
+      child: Text(
+        title,
+        style: TextStyle(
+          fontSize: 17,
+        ),
+      ),
+    );
+  }
+
+  Widget _snsInfo() {
+    return Padding(
+      padding: EdgeInsets.symmetric(horizontal: 15,),
+      child: Column(
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                'Facebook',
+                style: TextStyle(
+                  fontSize: 17,
+                ),
+              ),
+              Switch(
+                value: false,
+                onChanged: (value) => {},
+              ),
+            ],
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                'Twitter',
+                style: TextStyle(
+                  fontSize: 17,
+                ),
+              ),
+              Switch(
+                value: false,
+                onChanged: (value) => {},
+              ),
+            ],
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                'Tumblr',
+                style: TextStyle(
+                  fontSize: 17,
+                ),
+              ),
+              Switch(
+                value: false,
+                onChanged: (value) => {},
+              ),
+            ],
+          ),
         ],
       ),
     );

@@ -1,12 +1,15 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:expandable_text/expandable_text.dart';
 import 'package:flutter/material.dart';
+import 'package:instagram_clone_flutter/model/post.dart';
+import 'package:timeago/timeago.dart' as timeago;
 
 import '../imagepath.dart';
 import 'avater_widget.dart';
 
 class PostWidget extends StatelessWidget {
-  const PostWidget({super.key});
+  const PostWidget(this.post, {super.key});
+  final Post post;
 
   @override
   Widget build(BuildContext context) {
@@ -39,9 +42,11 @@ class PostWidget extends StatelessWidget {
         children: [
           AvatarWidget(
             type: AvatarTypeEnum.TYPE3,
-            nickName: 'Juice',
+            // nickName: 'Juice',
+            nickName: post.userInfo!.nickname,
             size: 40,
-            thumbPath: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTCR_l8xKBB1Agql-QYEn9IrGvTfA-IBPw29nzmJJJ52D79F5pcVWBKtKE38MvmWNjVxUQ&usqp=CAU',
+            // thumbPath: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTCR_l8xKBB1Agql-QYEn9IrGvTfA-IBPw29nzmJJJ52D79F5pcVWBKtKE38MvmWNjVxUQ&usqp=CAU',
+            thumbPath: post.thumbnail ?? 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTCR_l8xKBB1Agql-QYEn9IrGvTfA-IBPw29nzmJJJ52D79F5pcVWBKtKE38MvmWNjVxUQ&usqp=CAU',
           ),
           GestureDetector(
             onTap: (){},
@@ -57,7 +62,8 @@ class PostWidget extends StatelessWidget {
 
   Widget _image() {
     return CachedNetworkImage(
-        imageUrl: 'https://starwalk.space/gallery/images/what-is-space/1920x1080.jpg'
+        // imageUrl: 'https://starwalk.space/gallery/images/what-is-space/1920x1080.jpg'
+        imageUrl: post.thumbnail!
     );
   }
 
@@ -89,12 +95,13 @@ class PostWidget extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Text(
-            '좋아요 150개',
+            '좋아요 ${post.likeCount}개',
             style: TextStyle(fontWeight: FontWeight.bold),
           ),
           ExpandableText(
-            '컨텐츠 1입니다.\n컨텐츠 1입니다.\n컨텐츠 1입니다.\n컨텐츠 1입니다.',
-            prefixText: 'Juice',
+              post.description!,
+              // '컨텐츠 1입니다.\n컨텐츠 1입니다.\n컨텐츠 1입니다.\n컨텐츠 1입니다.',
+            prefixText: post.userInfo!.nickname,
             prefixStyle: TextStyle(fontWeight: FontWeight.bold),
             onPrefixTap: () {
               print('Juice 페이지로 이동');
@@ -125,10 +132,12 @@ class PostWidget extends StatelessWidget {
   }
 
   Widget _dataAgo() {
+
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 15.0),
       child: Text(
-        '1일전',
+        // '1일전',
+        timeago.format(post.createdAt!),
         style: TextStyle(color: Colors.grey, fontSize: 11),
       ),
     );

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:get/get_state_manager/src/simple/get_view.dart';
 import 'package:instagram_clone_flutter/controller/home_controller.dart';
 
@@ -105,7 +106,8 @@ class HomePage extends GetView<HomeController> {
 
   Widget _postList() {
     return Column(
-      children: List.generate(50, (index) => PostWidget()),
+      // children: List.generate(50, (index) => PostWidget()),
+      children: controller.rxPostList.map((post) => PostWidget(post),).toList(),
     );
   }
 }

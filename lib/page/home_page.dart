@@ -105,9 +105,9 @@ class HomePage extends GetView<HomeController> {
   }
 
   Widget _postList() {
-    return Column(
+    return Obx(() => Column(
       // children: List.generate(50, (index) => PostWidget()),
       children: controller.rxPostList.map((post) => PostWidget(post),).toList(),
-    );
+    ));
   }
 }

@@ -3,16 +3,15 @@ import 'dart:io';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:image_picker/image_picker.dart';
-import 'package:instagram_clone_flutter/component/message_popup.dart';
+import 'package:image/image.dart' as imageLib;
 import 'package:instagram_clone_flutter/controller/auth_controller.dart';
+import 'package:instagram_clone_flutter/controller/home_controller.dart';
 import 'package:instagram_clone_flutter/repository/post_repository.dart';
 import 'package:instagram_clone_flutter/utils/data_util.dart';
+import 'package:path/path.dart';
 import 'package:photo_manager/photo_manager.dart';
 import 'package:photofilters/filters/filters.dart';
 import 'package:photofilters/filters/preset_filters.dart';
-import 'package:path/path.dart';
-import 'package:image/image.dart' as imageLib;
 import 'package:photofilters/widgets/photo_filter.dart';
 
 import '../model/post.dart';
@@ -146,12 +145,28 @@ class UploadController extends GetxController {
 
   Future<void> _submitPost(Post post) async {
     await PostRepository.updatePost(post);
+    final homeController = Get.find<HomeController>();
+    homeController.loadPostList();
+
     showDialog(context: Get.context!,
-      builder: (context) => MessagePopup(
-        title: '포스트',
-        message: '포스팅이 완료 되었습니다.',
-        okCallback: () => Get.until((route) => Get.currentRoute == '/'),
+      // builder: (context) => MessagePopup(
+      //   title: '포스트',
+      //   message: '포스팅이 완료 되었습니다.',
+      //   okCallback: () => Get.until((route) => Get.currentRoute == '/'),
+      // ),
+      builder: (context) => AlertDialog(
+        title: Text('포스트'),
+        content: Text('포스팅이 완료 되었습니다.'),
+        actions: [
+          TextButton(
+            onPressed: () {
+              Get.until((route) => Get.currentRoute == '/');
+            },
+            child: Text('확인'),
+          ),
+        ],
       ),
     );
   }
+
 }

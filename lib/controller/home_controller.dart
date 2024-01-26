@@ -8,11 +8,11 @@ class HomeController extends GetxController {
 
   @override
   void onInit() {
-    _loadPostList();
+    loadPostList();
     super.onInit();
   }
 
-  Future<void> _loadPostList() async {
+  Future<void> loadPostList() async {
     final postList = await PostRepository.getPostList();
     rxPostList(postList);
 

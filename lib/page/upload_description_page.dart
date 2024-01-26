@@ -29,7 +29,7 @@ class UploadDescriptionPage extends GetView<UploadController> {
         ),
         actions: [
           GestureDetector(
-            onTap: () {},
+            onTap: controller.uploadPost,
             child: Padding(
               padding: EdgeInsets.all(15),
               child: Image.asset(
@@ -90,6 +90,7 @@ class UploadDescriptionPage extends GetView<UploadController> {
           ),
           Expanded(
             child: TextField(
+              controller: controller.textEditingController,
               maxLines: null,
               decoration: InputDecoration(
                 border: InputBorder.none,

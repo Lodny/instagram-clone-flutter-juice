@@ -23,9 +23,11 @@ class Post {
     this.deletedAt,
   });
 
+  // factory Post.fromJson(String id, Map<String, dynamic> json) {
   factory Post.fromJson(Map<String, dynamic> json) {
     return Post(
         id: json['id'] == null ? '' : json['id'] as String,
+        // id: json['id'] == null ? '' : json['id'] as String,
         thumbnail: json['thumbnail'] == null ? '' : json['thumbnail'] as String,
         description: json['description'] == null ? '' : json['description'] as String,
         likeCount: json['likeCount'] == null ? 0 : json['likeCount'] as int,

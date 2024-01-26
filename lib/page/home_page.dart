@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:get/get_state_manager/src/simple/get_view.dart';
+import 'package:instagram_clone_flutter/controller/home_controller.dart';
 
 import '../component/avater_widget.dart';
 import '../component/post_widget.dart';
 import '../imagepath.dart';
 
-class HomePage extends StatelessWidget {
+class HomePage extends GetView<HomeController> {
   const HomePage({super.key});
 
   @override
